@@ -32,6 +32,7 @@ export * from "./testing/fixed-clock";
 export * from "./testing/in-memory-idempotency";
 export * from "./testing/in-memory-queue";
 export * from "./testing/noop-logger";
+export * from "./application/console-logger";
 export * from "./time/local-date";
 export * from "./time/ports/tenant-timezone.port";
 export * from "./time/time.service";
