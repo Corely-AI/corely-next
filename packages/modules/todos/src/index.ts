@@ -9,3 +9,6 @@ export * from "./application/use-cases/delete-todo.usecase";
 export * from "./application/use-cases/complete-todo.usecase";
 export * from "./application/use-cases/reopen-todo.usecase";
 export * from "./infrastructure/prisma-todo-repository";
+export * from "./application/ai-tools";
+export * from "./infrastructure/ai/tools";
+

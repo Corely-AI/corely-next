@@ -9,9 +9,11 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@corely/contracts": "workspace:*"
+    "@corely/contracts": "workspace:*",
+    "zod": "catalog:"
   },
   "devDependencies": {
+    "@corely/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:"
   },
