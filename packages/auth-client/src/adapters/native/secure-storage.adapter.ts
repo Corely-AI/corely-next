@@ -1,5 +1,11 @@
 import type { TokenStorage } from "../../storage/storage.interface";
 
+interface ExpoSecureStore {
+  setItemAsync(key: string, value: string): Promise<void>;
+  getItemAsync(key: string): Promise<string | null>;
+  deleteItemAsync(key: string): Promise<void>;
+}
+
 /**
  * SecureStorage Adapter
  * React Native platform implementation using expo-secure-store
@@ -9,8 +15,7 @@ export class SecureStorageAdapter implements TokenStorage {
   private readonly REFRESH_TOKEN_KEY = "refreshToken";
   private readonly WORKSPACE_ID_KEY = "activeWorkspaceId";
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private SecureStore: any;
+  private SecureStore: ExpoSecureStore;
 
   constructor() {
     // Lazy load expo-secure-store to avoid import errors on web

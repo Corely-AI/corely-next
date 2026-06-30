@@ -89,7 +89,7 @@ export async function verifyJwt(
 
 function problem(status: number, title: string, detail?: string): Response {
   return Response.json(
-    { type: "about:blank", title, detail: detail ?? title, status, code: `Auth:${title.replace(/\\s+/g, "")}` },
+    { type: "about:blank", title, detail: detail ?? title, status, code: `Auth:${title.replace(/\s+/g, "")}` },
     { status }
   );
 }
@@ -303,7 +303,7 @@ export async function handleGetMe(request: Request): Promise<Response> {
     name: user.name,
     isSuperAdmin: false,
     activeTenantId: (payload.tenantId as string | null) ?? null,
-    memberships: user.memberships.map((m: any) => ({
+    memberships: user.memberships.map((m) => ({
       tenantId: m.tenantId,
       tenantName: m.tenant?.name,
       roleId: m.roleId,
@@ -359,7 +359,7 @@ export async function handleLogout(request: Request): Promise<Response> {
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
-export function extractBearer(request: Request): string | null {
+function extractBearer(request: Request): string | null {
   const auth = request.headers.get("authorization") ?? "";
   if (!auth.startsWith("Bearer ")) return null;
   return auth.slice(7);
@@ -368,11 +368,11 @@ export function extractBearer(request: Request): string | null {
 /** Dev: console.log the plain code. Prod: send email via Resend. */
 async function deliverOtp(email: string, code: string): Promise<void> {
   if (IS_DEV) {
-    console.log("\\n┌─────────────────────────────────────────┐");
-    console.log(\`│  🔑 OTP for \${email.padEnd(28)}│\`);
-    console.log(\`│      Code: \${code.padEnd(30)}│\`);
-    console.log(\`│      (expires in \${OTP_TTL_MINUTES} minutes)           │\`);
-    console.log("└─────────────────────────────────────────┘\\n");
+    console.log("\n┌─────────────────────────────────────────┐");
+    console.log(`│  🔑 OTP for ${email.padEnd(28)}│`);
+    console.log(`│      Code: ${code.padEnd(30)}│`);
+    console.log(`│      (expires in ${OTP_TTL_MINUTES} minutes)           │`);
+    console.log("└─────────────────────────────────────────┘\n");
     return;
   }
 
@@ -385,13 +385,13 @@ async function deliverOtp(email: string, code: string): Promise<void> {
   const fromAddress = process.env.EMAIL_FROM ?? "noreply@specpilot.app";
   await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { Authorization: \`Bearer \${apiKey}\`, "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       from: fromAddress,
       to: email,
-      subject: \`Your SpecPilot verification code: \${code}\`,
-      html: \`<p>Your verification code is: <strong>\${code}</strong></p><p>It expires in \${OTP_TTL_MINUTES} minutes.</p>\`,
-      text: \`Your verification code is: \${code}\\n\\nIt expires in \${OTP_TTL_MINUTES} minutes.\`,
+      subject: `Your SpecPilot verification code: ${code}`,
+      html: `<p>Your verification code is: <strong>${code}</strong></p><p>It expires in ${OTP_TTL_MINUTES} minutes.</p>`,
+      text: `Your verification code is: ${code}\n\nIt expires in ${OTP_TTL_MINUTES} minutes.`,
     }),
   });
 }

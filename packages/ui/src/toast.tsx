@@ -17,7 +17,7 @@ const ToastViewport = React.forwardRef<
       "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
       className
     )}
-    {...props}
+    {...(props as any)}
   />
 ));
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
@@ -46,7 +46,7 @@ const Toast = React.forwardRef<
     <ToastPrimitives.Root
       ref={ref}
       className={cn(toastVariants({ variant }), className)}
-      {...props}
+      {...(props as any)}
     />
   );
 });
@@ -65,7 +65,7 @@ const ToastAction = React.forwardRef<
       "disabled:pointer-events-none disabled:opacity-50",
       className
     )}
-    {...props}
+    {...(props as any)}
   />
 ));
 ToastAction.displayName = ToastPrimitives.Action.displayName;
@@ -83,7 +83,7 @@ const ToastClose = React.forwardRef<
       className
     )}
     toast-close=""
-    {...props}
+    {...(props as any)}
   >
     <X className="h-4 w-4" />
   </ToastPrimitives.Close>
@@ -94,7 +94,7 @@ const ToastTitle = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Title>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Title ref={ref} className={cn("text-sm font-semibold", className)} {...props} />
+  <ToastPrimitives.Title ref={ref} className={cn("text-sm font-semibold", className)} {...(props as any)} />
 ));
 ToastTitle.displayName = ToastPrimitives.Title.displayName;
 
@@ -105,7 +105,7 @@ const ToastDescription = React.forwardRef<
   <ToastPrimitives.Description
     ref={ref}
     className={cn("text-sm opacity-90", className)}
-    {...props}
+    {...(props as any)}
   />
 ));
 ToastDescription.displayName = ToastPrimitives.Description.displayName;
